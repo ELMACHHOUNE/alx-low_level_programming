@@ -1,4 +1,4 @@
-#include "main.h"
+#include "holberton.h"
 #include <stdio.h>
 
 /**
@@ -8,11 +8,11 @@
  */
 int main(void)
 {
-	int n;
+	char s[] = "Holberton School!\n";
+	char *p;
 
-	n = 402;
-	printf("n=%d\n", n);
-	reset_to_98(&n);
-	printf("n=%d\n", n);
+	p = string_toupper(s);
+	printf("%s", p);
+	printf("%s", s);
 	return (0);
 }

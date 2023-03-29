@@ -1,4 +1,4 @@
-#include "holberton.h"
+#include "main.h"
 
 /**
  * find_root - find square root of n, starting from the smallest possible, 0

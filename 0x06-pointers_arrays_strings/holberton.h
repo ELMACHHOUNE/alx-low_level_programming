@@ -9,82 +9,88 @@
 int _putchar(char c);
 
 /**
- * _memset - fill n bytes of memory with a constant value
- * @s: pointer to memory area
- * @b: constant value
- * @n: number of bytes to fill
- * Return: memory area
+ * _strcat - concatenate two strings
+ * @dest: string to be appended to
+ * @src: string to append
+ * Return: concatenated string
  */
 
-char *_memset(char *s, char b, unsigned int n);
+char *_strcat(char *dest, char *src);
 
 /**
- * _memcpy - copy n bytes of memory from source to destination
- * @dest: destination
- * @src: source
- * @n: number of bytes
- * Return: pointer to dest
+ * _strcat - concatenate n bytes to destination string
+ * @dest: string to be appended to
+ * @src: string to append
+ * @n: append n number of bytes(chars)
+ * Return: concatenated string
  */
 
-char *_memcpy(char *dest, char *src, unsigned int n);
+char *_strncat(char *dest, char *src, int n);
 
 /**
- * _strchr - locate 1st occurrence of character in string and returns pointer there
- * @s: string to search
- * @c: target characer
- * Return: pointer to that character in string
+ * _strncpy - copies n bytes of a source into buffer of a destination string,
+ * @dest: copy source to this buffer
+ * @src: this is the source to copy
+ * @n: n bytes to be copied
+ * Return: copied string
  */
 
-char *_strchr(char *s, char c);
+char *_strncpy(char *dest, char *src, int n);
 
 /**
- * _strspn - return length of string that matches values consistently
- * @s: string to search
- * @accept: target matches
- * Return: number of bytes consecutively matched
+ * _strcmp - compare two strings
+ * @s1: one string
+ * @s2: one string
+ * Return: int that tells num spaces in between
  */
 
-unsigned int _strspn(char *s, char *accept);
+int _strcmp(char *s1, char *s2);
 
 /**
- * _strpbrk - return pointer to byte in s that matches a byte in accepted target
- * @s: string to search
- * @accept: target matches
- * Return: pointer to index of string at first occurence
+ * reverse_array - reverse array elements
+ * @a: array
+ * @n: number of elements in array
  */
 
-char *_strpbrk(char *s, char *accept);
+void reverse_array(int *a, int n);
 
 /**
- * _strstr - locate and return pointer to first occurence of substring
- * @haystack: string to search
- * @needle: target substring to search for
- * Return: pointer to index of string at first occurence of whole substring
+ * string_toupper - capitalize all letters in string
+ * @s: string to manipulate
+ * Return: string with all letters capitalized
  */
 
-char *_strstr(char *haystack, char *needle);
+char *string_toupper(char *);
 
 /**
- * print_chessboard - print chessboard given set 2D array
- * @a: 2D array
+ * string_toupper - capitalize first letter of all words
+ * @s: string to manipulate
+ * Return: string
  */
 
-void print_chessboard(char (*a)[8]);
+char *cap_string(char *s);
 
 /**
- * print_diagsums - print sums of diagonals in matrix
- * @a: matrix
- * @size: size of matrix
+ * rot13 - encode string using rot13
+ * @s: string to encode
+ * Return: encoded string
  */
 
-void print_diagsums(int *a, int size);
+char *rot13(char *s);
 
 /**
- * set_string - set value of pointer to a char
- * @s: variable of type pointer
- * @to: char
+ * leet - encode string into 1337 leet
+ * @s: string to manipulate
+ * Return: string
  */
 
-void set_string(char **s, char *to);
+char *leet(char *s);
+
+/**
+ * print_number - print an integer, without using long, arrays, or pointers
+ * @n: number to be printed
+ */
+
+void print_number(int n);
 
 #endif

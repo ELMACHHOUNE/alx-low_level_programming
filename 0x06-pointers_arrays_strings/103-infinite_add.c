@@ -1,47 +1,48 @@
+#include "main.h"
 #include <stdio.h>
+#include <string.h>
 
 /**
- * print_buffer - Print the entire buffer w/ certain conditions
- * @b: The buffer to print
- * @size: The size of the buffer
+ * infinite_add - Adds two numbers
+ * @n1: The first number
+ * @n2: The second number
+ * @r: The buffer to store the result
+ * @size_r: The size of the buffer
+ *
+ * Return: A pointer to the result, or 0 if the result can't be stored in r
  */
-void print_buffer(char *b, int size)
+char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-	int i, j;
+        int len1 = strlen(n1);
+        int len2 = strlen(n2);
+        int i, j;
+        int carry = 0;
 
-	i = 0;
-	if (size <= 0)
-		putchar('\n');
-	else
-	{
-		while (i < size)
-		{
-			printf("%08x: ", i);
-			j = 0;
-			while (j < 10)
-			{
-				if (j % 2 == 0 && j > 0)
-					printf(" ");
-				if (j + i > size - 1)
-					printf("  ");
-				else
-					printf("%.2x", b[j + i]);
-				j++;
-			}
-			putchar(' ');
-			j = 0;
-			while (j < 10)
-			{
-				if (j + i > size - 1)
-					break;
-				if (b[j + i] >= ' ' && b[j + i] <= '~')
-					putchar(b[j + i]);
-				else
-					putchar('.');
-				j++;
-			}
-			putchar('\n');
-			i += 10;
-		}
-	}
+        if (len1 + 1 > size_r || len2 + 1 > size_r)
+                return 0;
+
+        for (i = len1 - 1, j = len2 - 1; i >= 0 || j >= 0 || carry; i--, j--) {
+                int digit1 = i >= 0 ? n1[i] - '0' : 0;
+                int digit2 = j >= 0 ? n2[j] - '0' : 0;
+                int sum = digit1 + digit2 + carry;
+
+                if (sum >= 10) {
+                        carry = 1;
+                        sum -= 10;
+                } else {
+                        carry = 0;
+                }
+
+                r[len1 + len2 - i - j - 2] = sum + '0';
+        }
+
+        r[len1 + len2 - i - j - 2] = '\0';
+
+        for (i = 0, j = len1 + len2 - 3; i < j; i++, j--) {
+                char tmp = r[i];
+                r[i] = r[j];
+                r[j] = tmp;
+        }
+
+        return r;
 }

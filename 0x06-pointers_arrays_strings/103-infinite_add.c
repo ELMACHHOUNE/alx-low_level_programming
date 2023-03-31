@@ -1,63 +1,60 @@
 #include "main.h"
-#include <stdio.h>
-#include <string.h>
 
 /**
- * infinite_add - Adds two numbers
+ * infinite_add - adds two numbers
  *
- * @n1: The first number
- * @n2: The second number
- * @r: The buffer to store the result
- * @size_r: The size of the buffer
+ * @n1: first number to add
+ * @n2: second number to add
+ * @r: buffer to store the result
+ * @size_r: size of the buffer
  *
- * Return: The pointer to the result or 0 if it cannot be stored in r
+ * Return: pointer to the result, or 0 if the result cannot be stored
  */
 char *infinite_add(char *n1, char *n2, char *r, int size_r)
 {
-    int len1 = strlen(n1);
-    int len2 = strlen(n2);
-    int len_res, carry = 0, digit1, digit2, sum;
-    char *res;
+	int len1 = 0, len2 = 0, carry = 0, sum = 0, i, j;
+	char *rev_n1, *rev_n2;
 
-    if (len1 > size_r || len2 > size_r)
-        return 0;
+	while (n1[len1])
+		len1++;
+	while (n2[len2])
+		len2++;
 
-    len_res = len1 > len2 ? len1 : len2;
-    if (len_res >= size_r)
-        return 0;
+	if (len1 > size_r || len2 > size_r || size_r < 1)
+		return (0);
 
-    res = r + size_r;
-    *--res = '\0';
+	rev_n1 = malloc(len1 * sizeof(char));
+	rev_n2 = malloc(len2 * sizeof(char));
 
-    while (len_res > 0)
-    {
-        digit1 = len1 > 0 ? n1[--len1] - '0' : 0;
-        digit2 = len2 > 0 ? n2[--len2] - '0' : 0;
-        sum = digit1 + digit2 + carry;
+	for (i = 0, j = len1 - 1; i < len1; i++, j--)
+		rev_n1[i] = n1[j];
 
-        if (sum >= 10)
-        {
-            carry = 1;
-            sum -= 10;
-        }
-        else
-            carry = 0;
+	for (i = 0, j = len2 - 1; i < len2; i++, j--)
+		rev_n2[i] = n2[j];
 
-        *--res = sum + '0';
-        len_res--;
-    }
+	for (i = 0; i < len1 || i < len2 || carry; i++)
+	{
+		sum = carry;
+		if (i < len1)
+			sum += rev_n1[i] - '0';
+		if (i < len2)
+			sum += rev_n2[i] - '0';
+		if (i >= size_r)
+			return (0);
+		r[i] = (sum % 10) + '0';
+		carry = sum / 10;
+	}
 
-    if (carry > 0)
-    {
-        if (len_res >= size_r)
-            return 0;
+	r[i] = '\0';
+	for (i = 0, j = strlen(r) - 1; i < j; i++, j--)
+	{
+		char tmp = r[i];
+		r[i] = r[j];
+		r[j] = tmp;
+	}
 
-        *--res = '1';
-    }
+	free(rev_n1);
+	free(rev_n2);
 
-    if (res < r)
-        return 0;
-
-    memmove(r, res, size_r - (res - r));
-    return r;
+	return (r);
 }

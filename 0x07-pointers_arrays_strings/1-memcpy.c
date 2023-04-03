@@ -10,35 +10,13 @@
 
 char *_memcpy(char *dest, char *src, unsigned int n)
 {
+	unsigned int i = 0;
+	char *start = dest;
 
-	int size = n; /* only accept positive sizes */
-
-	if (size > 0)
+	while (i < n)
 	{
-		int i;
-
-		for (i = 0; i < size; i++)
-			dest[i] = src[i];
+		*dest++ = *src++;
+		i++;
 	}
-
-	return (dest);
+	return (start);
 }
-
-/* pointer arithmetic version
-
-char *_memcpy(char *dest, char *src, unsigned int n)
-{
-
-   int size = n;
-
-   if (size > 0)
-   {
-	int i;
-
-	for (i = 0; i < size; i++)
-		*(dest + i) = *(src + i);
-   }
-
-   return (dest);
-}
-*/

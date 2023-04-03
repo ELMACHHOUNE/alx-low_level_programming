@@ -12,27 +12,13 @@ char *_strchr(char *s, char c)
 {
 	int i = 0;
 
-	while (s[i] != '\0' && s[i] != c) /* find match */
+	while (*(s + i))
+	{
+		if (*(s + i) == c)
+			return (s + i);
 		i++;
-
-	if (s[i] == c) /* if match, assign to address */
-		return (&s[i]);
-	else
-		return (NULL);
-}
-
-/* pointer arithmetic version
-
-char *_strchr(char *s, char c)
-{
-        int i = 0;
-
-	while (*(s + i) && *(s + i) != c)
-	    i++;
-
+	}
 	if (*(s + i) == c)
-	    return (s + i);
-	else
-	    return (NULL);
+		return (s + i);
+	return (NULL);
 }
-*/

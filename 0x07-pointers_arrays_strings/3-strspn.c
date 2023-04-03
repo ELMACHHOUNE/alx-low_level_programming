@@ -9,49 +9,23 @@
 
 unsigned int _strspn(char *s, char *accept)
 {
-	int i = 0, j;
-	int matches = 0;
+	int i;
+	int consistC = 0;
+	int prevC;
 
-	while (s[i] != '\0') /*iterate through string*/
+	while (*s)
 	{
-
-		for (j = 0; accept[j] != '\0'; j++) /*iterate through target*/
+		i = 0;
+		prevC = consistC;
+		while (*(accept + i) != '\0')
 		{
-			if (s[i] == accept[j]) /*record & break at first match*/
-			{
-				matches++;
-				break;
-			}
-			if (accept[j + 1] == '\0' && s[i] != accept[j])
-				return (matches);/*return if idx doesn't match*/
+			if (*(accept + i) == *s)
+				consistC++;
+			i++;
 		}
-		i++;
+		if (prevC == consistC) /* didn't equal a char from accept */
+			break;
+		s++;
 	}
-	return (matches); /* return num if all match till end */
-
+	return (consistC);
 }
-
-/* pointer arithmetic version
-
-unsigned int _strspn(char *s, char *accept)
-{
-	int i = 0, j;
-	int matches = 0;
-
-	while (*(s + i))
-	{
-		for (j = 0; *(accept + j); j++)
-		{
-			if (*(s + i) == *(accept + j))
-			{
-				matches++;
-				break;
-			}
-			if (*(accept + j + 1) == '\0' && *(s + i) != *(accept + j))
-				return (matches);
-		}
-		i++;
-	}
-	return (matches);
-}
-*/

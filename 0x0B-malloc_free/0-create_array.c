@@ -1,7 +1,6 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
-
 /**
  * create_array -  Entry point
  *@size: unsigned int.
@@ -12,7 +11,6 @@ char *create_array(unsigned int size, char c)
 {
 	char *p;
 	unsigned int i;
-
 	p = malloc(sizeof(c) * size);
 	if (size == 0 || p == NULL)
 	{

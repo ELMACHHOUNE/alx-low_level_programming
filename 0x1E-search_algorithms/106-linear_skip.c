@@ -1,54 +1,56 @@
 #include "search_algos.h"
 
-/**
- * linear_skip - searches for a value in a sorted skip list of integers
- *
- * @list: a pointer to the head of the list to search in
- * @value: the value to search for
- *
- * Return: a pointer to the first node where value is located or NULL
- */
 
+/**
+ * linear_skip - searches for a value conatined in a skip list; assumes a
+ * list with sorted values and a single skip layer with nodes at every index
+ * which is a multiple of the square root of the size of the list
+ *
+ * @list: pointer to the head of the skip list to traverse
+ * @value: value to search for
+ * Return: pointer on the first node where value is located, or NULL if list
+ * is NULL or value not found
+ */
 skiplist_t *linear_skip(skiplist_t *list, int value)
 {
-	skiplist_t *cur, *prev;
+	skiplist_t *temp = NULL, *stop = NULL;
 
 	if (!list)
 		return (NULL);
 
-	cur = list;
-	while (cur->next && cur->n < value)
+	temp = list;
+	while (temp && temp->express && temp->express->n < value)
 	{
-		prev = cur;
-		if (cur->express)
-			cur = cur->express;
-		else
-		{
-			while (cur->next)
-				cur = cur->next;
-		}
-		if (cur->next)
-			printf("Value checked at index [%lu] = [%i]\n", cur->index, cur->n);
+		printf("Value checked at index [%lu] = [%i]\n",
+		       temp->express->index, temp->express->n);
+		temp = temp->express;
 	}
-
-	printf("Value found between indexes [%lu] and [%lu]\n", prev->index,
-	       cur->index);
-
-	cur = prev;
-	while (cur && cur->n < value)
+	stop = temp;
+	while (stop && stop->next != stop->express)
+		stop = stop->next;
+	/* value potentially lies between two express nodes */
+	if (temp->express)
 	{
-		printf("Value checked at index [%lu] = [%i]\n", cur->index, cur->n);
-		if (cur->next)
-			cur = cur->next;
-		else
-			return (NULL);
+		printf("Value checked at index [%lu] = [%i]\n",
+		       temp->express->index, temp->express->n);
+		printf("Value found between indexes [%lu] and [%lu]\n",
+		       temp->index, temp->express->index);
 	}
+	/* value is greater than last express node, potentially out of list */
+	else
+		printf("Value found between indexes [%lu] and [%lu]\n",
+		       temp->index, stop->index);
 
-	if (cur && cur->n == value)
+	while (temp != stop && temp->n < value)
 	{
-		printf("Value checked at index [%lu] = [%i]\n", cur->index, cur->n);
-		return (cur);
+		printf("Value checked at index [%lu] = [%i]\n",
+		       temp->index, temp->n);
+		temp = temp->next;
 	}
+	printf("Value checked at index [%lu] = [%i]\n",
+	       temp->index, temp->n);
 
-	return (NULL);
+	if (temp == stop)
+		return (NULL);
+	return (temp);
 }
